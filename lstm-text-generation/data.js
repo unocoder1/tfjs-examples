@@ -113,8 +113,8 @@ export class TextData {
    *
    * @param {number} numExamples Number examples to generate.
    * @returns {[tf.Tensor, tf.Tensor]} `xs` and `ys` Tensors.
-   *   `xs` has the shape of `[numExamples, this.sampleLen]`.
-   *   `ys` has the shape of `[numExamples]`.
+   *   `xs` has the shape of `[numExamples, this.sampleLen, 1]`.
+   *   `ys` has the shape of `[numExamples, 1]`.
    */
   nextDataEpoch(numExamples) {
     this.generateExampleBeginIndices_();
@@ -124,15 +124,15 @@ export class TextData {
     }
 
     const xsBuffer = new tf.TensorBuffer([
-        numExamples, this.sampleLen_]);
-    const ysBuffer  = new tf.TensorBuffer([numExamples]);
+        numExamples, this.sampleLen, 1]);
+    const ysBuffer  = new tf.TensorBuffer([numExamples, 1]);
     for (let i = 0; i < numExamples; ++i) {
       const beginIndex = this.exampleBeginIndices_[
           this.examplePosition_ % this.exampleBeginIndices_.length];
       for (let j = 0; j < this.sampleLen_; ++j) {
-        xsBuffer.set(this.textString_.charCodeAt(beginIndex + j), i, j);
+        xsBuffer.set(this.textString_.charCodeAt(beginIndex + j), i, j, 0);
       }
-      ysBuffer.set(this.textString_.charCodeAt(beginIndex + this.sampleLen_), i);
+      ysBuffer.set(this.textString_.charCodeAt(beginIndex + this.sampleLen_), i, 0);
       this.examplePosition_++;
     }
     return [xsBuffer.toTensor(), ysBuffer.toTensor()];

@@ -27,8 +27,8 @@ import {HardTanh} from './hardTanh';
  *   characters there are.
  * @param {number|numbre[]} lstmLayerSizes Size(s) of the LSTM layers.
  * @return {tf.Model} A next-character prediction model with an input shape
- *   of `[null, sampleLen]` and an output shape of
- *   `[null]`.
+ *   of `[null, sampleLen, 1]` and an output shape of
+ *   `[null, 1]`.
  */
 export function createModel(
   sampleLen, lstmLayerSizes,
@@ -64,8 +64,8 @@ export function compileModel(model, learningRate) {
 /**
  * Train model.
  * @param {tf.Model} model The next-char prediction model, assumed to have an
- *   input shape of `[null, sampleLen]` and an output shape of
- *   `[null]`.
+ *   input shape of `[null, sampleLen, 1]` and an output shape of
+ *   `[null, 1]`.
  * @param {TextData} textData The TextData object to use during training.
  * @param {number} numEpochs Number of training epochs.
  * @param {number} examplesPerEpoch Number of examples to draw from the
