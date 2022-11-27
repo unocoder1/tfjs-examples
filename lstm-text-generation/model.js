@@ -56,7 +56,7 @@ export function createModel(
 
 export function compileModel(model, learningRate) {
   const optimizer = tf.train.rmsprop(learningRate);
-  model.compile({optimizer: optimizer, loss: 'categoricalCrossentropy'});
+  model.compile({optimizer: optimizer, loss: 'meanSquaredError'});
   console.log(`Compiled model with learning rate ${learningRate}`);
   model.summary();
 }
