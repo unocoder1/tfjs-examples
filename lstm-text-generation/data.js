@@ -124,7 +124,7 @@ export class TextData {
     }
 
     const xsBuffer = new tf.TensorBuffer([
-        numExamples, this.sampleLen, 1]);
+        numExamples, this.sampleLen_, 1]);
     const ysBuffer  = new tf.TensorBuffer([numExamples, 1]);
     for (let i = 0; i < numExamples; ++i) {
       const beginIndex = this.exampleBeginIndices_[
